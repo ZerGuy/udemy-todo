@@ -18,7 +18,7 @@ export default class App extends React.Component {
             this.createTodoItem('Have a lunch'),
         ],
         filter: {
-            status: 'All',
+            status: 'all',
             text: ''
         }
     };
@@ -45,9 +45,9 @@ export default class App extends React.Component {
             .filter(el => el.label.toLowerCase().indexOf(this.state.filter.text.toLowerCase()) >= 0)
             .filter(el => {
                 switch (this.state.filter.status) {
-                    case 'All': return true;
-                    case 'Done': return el.done;
-                    case 'Active': return !el.done;
+                    case 'all': return true;
+                    case 'done': return el.done;
+                    case 'active': return !el.done;
                     default: return false;
                 }
             });
@@ -122,7 +122,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        const {todoData} = this.state;
+        const {todoData, filter} = this.state;
         const doneCount = todoData.filter(el => el.done).length;
         const todoCount = todoData.length - doneCount;
 
@@ -131,7 +131,7 @@ export default class App extends React.Component {
                 <AppHeader toDo={todoCount} done={doneCount}/>
                 <div className="top-panel d-flex">
                     <SearchPanel onChange={this.setFilterText}/>
-                    <ItemStatusFilter onChange={this.setFilterStatus}/>
+                    <ItemStatusFilter onChange={this.setFilterStatus} value={filter.status}/>
                 </div>
 
                 <TodoList
